@@ -16,7 +16,7 @@ function App() {
 		const fetchData = async() => {
           const res = await fetch('http://localhost:8080');
           const result = res.json();
-          console.log(result)
+          //console.log(result)
           return result;
         }	
         fetchData().then(res => setIssue(res));
@@ -52,28 +52,15 @@ function App() {
                 <div className="list-item" key={i}>
                  <h4>{issue[i].title}</h4>
                   <p>{issue[i].description}</p>
-                  <Link 
-                    to={{
-                      pathname: `/update/${a.id}`,
-                      state: { 
-                        title: a.title, 
-                        description: a.description
-                      }
-                    }}
-                  >
-                <h4>✏️</h4>
-                </Link>
-                  {/* <Link to={{
-                    
-                  }`/update/${a.id}`} 
-                  state={{ title: `${a.title}`, description: `${a.description}` }}>
-                    <h4>✏️</h4>
-                    </Link> */}
+                  <Link to={`/update/${a.id}`}
+                  state={{ 
+                    title: `${a.title}`, description: `${a.description}`, id: `${a.id}`
+                  }}><h4>✏️</h4></Link>
                   <span onClick={(e)=>{
                     fetch('http://localhost:8080/deleteIssue/' + a.id)
                     .then(()=>{ 
                         //success
-                        console.log('deleted')
+                        //console.log('deleted')
                         e.target.parentElement.style.opacity = 0
                         setTimeout(()=> {
                             e.target.parentElement.style.display = 'none'
@@ -85,20 +72,12 @@ function App() {
                   }}>🗑️</span> 
                 </div>
             )
-          
           }> </Route>
           <Route path="/create" element={<Create />} />
           <Route path="/update/:id" element={<Update />} />
         </Routes>
         </Suspense> }
- 
-     
-       <div>
-        
-          </div>
     </div> 
   )
 }
-
-
 export default App;

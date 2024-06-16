@@ -9,9 +9,9 @@ function UpdateIssue() {
     //const [title, setTitle] = useState(props.title)
     //const [description, seDescription] = useState(props.description)
     const location = useLocation();
-    const { title, description } = location.state ;
+    const { title, description, id } = location.state ;
 
-    console.log(title);
+    //console.log(location.state);
 
     return (
         <div>
@@ -20,7 +20,9 @@ function UpdateIssue() {
                 <input name="title" placeholder="title" defaultValue={title}/>
                 <h4>description</h4>
                 <input name="description" placeholder="description" defaultValue={description}/>
-                <Button variant="success" type="submet">Update</Button>
+                <input name="id" type="hidden" value={id}/>
+                <br/>
+                <Button variant="success" type="submit">Update</Button>
             </form>
         </div>
     )

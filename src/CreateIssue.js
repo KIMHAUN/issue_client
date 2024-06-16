@@ -9,7 +9,8 @@ function CreateIssue() {
                 <input name="title" placeholder="title"/>
                 <h4>description</h4>
                 <input name="description" placeholder="description"/>
-                <Button variant="success" type="submet">Submit</Button>
+                <br/>
+                <Button variant="success" type="submit">Submit</Button>
             </form>
         </div>
     )
