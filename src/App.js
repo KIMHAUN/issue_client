@@ -6,6 +6,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import './App.css';
 
 const Create = lazy(() => import("./CreateIssue.js"));
+const Update = lazy(() => import("./UpdateIssue.js"));
 
 function App() {
 	const [issue, setIssue] = useState([]);
@@ -47,18 +48,32 @@ function App() {
       { <Suspense fallback={<div>Loading...</div>}>
         <Routes> 
           <Route path="/" element={
-           
             issue.map((a, i)=> 
                 <div className="list-item" key={i}>
-                  <Link prefetch={false} href={`/detail/${a._id}`}><h4>{issue[i].title}</h4></Link>
+                 <h4>{issue[i].title}</h4>
                   <p>{issue[i].description}</p>
-                  <Link href={`/update/${a._id}`}><h4>✏️</h4></Link>
+                  <Link 
+                    to={{
+                      pathname: `/update/${a.id}`,
+                      state: { 
+                        title: a.title, 
+                        description: a.description
+                      }
+                    }}
+                  >
+                <h4>✏️</h4>
+                </Link>
+                  {/* <Link to={{
+                    
+                  }`/update/${a.id}`} 
+                  state={{ title: `${a.title}`, description: `${a.description}` }}>
+                    <h4>✏️</h4>
+                    </Link> */}
                   <span onClick={(e)=>{
-                    fetch('/api/post/delete?issue_id=' + a._id)
-                    .then((r)=> r.json())
+                    fetch('http://localhost:8080/deleteIssue/' + a.id)
                     .then(()=>{ 
                         //success
-                        console.log('삭제 완료')
+                        console.log('deleted')
                         e.target.parentElement.style.opacity = 0
                         setTimeout(()=> {
                             e.target.parentElement.style.display = 'none'
@@ -73,6 +88,7 @@ function App() {
           
           }> </Route>
           <Route path="/create" element={<Create />} />
+          <Route path="/update/:id" element={<Update />} />
         </Routes>
         </Suspense> }
  
